@@ -5,6 +5,28 @@ import { NadaSymbol } from '../visual/NadaSymbol';
 import { ArchiveCard } from './ArchiveCard';
 import { ArchiveCategoryKey, ArchiveItem } from './types';
 
+import mapUrl from '../../../map.jpg';
+import aswanUrl from '../../../aswan.jpg';
+import designUrl from '../../../design.png';
+import peopleUrl from '../../../people.jpg';
+import whyUrl from '../../../why.jpg';
+import musicUrl from '../../../music.jpg';
+import paintingUrl from '../../../painting.jpg';
+import boardUrl from '../../../board.jpg';
+import runUrl from '../../../run.jpg';
+import mangoUrl from '../../../mango.jpg';
+import cakeUrl from '../../../cake.jpg';
+import bimUrl from '../../../bim.png';
+import brushesUrl from '../../../brushes.jpg';
+import geoUrl from '../../../geo.png';
+import gradUrl from '../../../grad.jpg';
+import coffeeUrl from '../../../coffee.jpg';
+import rainUrl from '../../../rain.jpg';
+import artUrl from '../../../art.jpg';
+import sketchUrl from '../../../sketch.jpg';
+import babyUrl from '../../../baby.jpg';
+import doorUrl from '../../../door.jpg';
+
 export interface ArchiveSectionProps {
   className?: string;
 }
@@ -30,6 +52,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'MAPS',
     tag: 'OBS-01',
     date: '2026',
+    src: mapUrl,
+    aspect: 'landscape',
   },
   {
     id: 'notice-science',
@@ -40,6 +64,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'SCIENCE',
     tag: 'OBS-02',
     date: '2026',
+    src: aswanUrl,
+    aspect: 'landscape',
   },
   {
     id: 'notice-technology',
@@ -50,6 +76,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'TECH',
     tag: 'OBS-03',
     date: '2026',
+    src: designUrl,
+    aspect: 'landscape',
   },
   {
     id: 'notice-people',
@@ -60,6 +88,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'PEOPLE',
     tag: 'OBS-04',
     date: '2026',
+    src: peopleUrl,
+    aspect: 'landscape',
   },
   {
     id: 'notice-why',
@@ -70,6 +100,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'INQUIRY',
     tag: 'OBS-05',
     date: '2026',
+    src: whyUrl,
+    aspect: 'landscape',
   },
   {
     id: 'notice-natural',
@@ -80,7 +112,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'NATURAL',
     tag: 'OBS-06',
     date: '2026',
-    isPlaceholder: true,
+    src: musicUrl,
+    aspect: 'portrait',
   },
 
   // ==========================================
@@ -95,6 +128,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'DRAWING',
     tag: 'KEEP-01',
     date: '2026',
+    src: paintingUrl,
+    aspect: 'landscape',
   },
   {
     id: 'keep-stay',
@@ -105,6 +140,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'MADE',
     tag: 'KEEP-02',
     date: '2026',
+    src: boardUrl,
+    aspect: 'landscape',
   },
   {
     id: 'keep-passing',
@@ -115,6 +152,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'EVERYDAY',
     tag: 'KEEP-03',
     date: '2026',
+    src: runUrl,
+    aspect: 'portrait',
   },
   {
     id: 'keep-curls',
@@ -125,6 +164,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'MOMENTS',
     tag: 'KEEP-04',
     date: '2026',
+    src: mangoUrl,
+    aspect: 'portrait',
   },
   {
     id: 'keep-story',
@@ -135,6 +176,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'STORY',
     tag: 'KEEP-05',
     date: '2026',
+    src: cakeUrl,
+    aspect: 'portrait',
   },
 
   // ==========================================
@@ -149,6 +192,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'SPATIAL LOGIC',
     tag: 'FASC-01',
     date: 'ACTIVE',
+    src: bimUrl,
+    aspect: 'landscape',
   },
   {
     id: 'fasc-marks',
@@ -159,6 +204,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'STUDIO CRAFT',
     tag: 'FASC-02',
     date: 'ACTIVE',
+    src: brushesUrl,
+    aspect: 'portrait',
   },
   {
     id: 'fasc-system',
@@ -169,6 +216,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'DIGITAL CRAFT',
     tag: 'FASC-03',
     date: 'ACTIVE',
+    src: geoUrl,
+    aspect: 'landscape',
   },
   {
     id: 'fasc-structure',
@@ -179,18 +228,19 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'STRUCTURE',
     tag: 'FASC-04',
     date: 'ACTIVE',
+    src: gradUrl,
+    aspect: 'landscape',
   },
   {
     id: 'fasc-placeholder',
     category: 'fascinations',
     symbol: 'thought',
-    title: '[CONTENT TO BE ADDED]',
-    note: '[current inquiry occupying studio attention to be cataloged]',
+    title: 'The Space Between Thoughts',
+    note: 'Observing how quiet intervals and simple routines often bring clarity to complex ideas.',
     domain: 'INQUIRY',
     tag: 'FASC-05',
     date: 'OPEN',
-    src: '/src/assets/images/archive_camera_1790670839177.jpg',
-    alt: 'Vintage 35mm film camera on studio surface',
+    src: coffeeUrl,
     aspect: 'landscape',
   },
 
@@ -206,6 +256,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'RECURRENT',
     tag: 'RETURN-01',
     date: 'RECURRENT',
+    src: rainUrl,
+    aspect: 'landscape',
   },
   {
     id: 'return-look',
@@ -216,6 +268,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'VISUAL',
     tag: 'RETURN-02',
     date: 'RECURRENT',
+    src: artUrl,
+    aspect: 'landscape',
   },
   {
     id: 'return-sketch',
@@ -226,6 +280,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'CRAFT',
     tag: 'RETURN-03',
     date: 'RECURRENT',
+    src: sketchUrl,
+    aspect: 'portrait',
   },
   {
     id: 'return-people',
@@ -236,19 +292,20 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     domain: 'PEOPLE',
     tag: 'RETURN-04',
     date: 'RECURRENT',
+    src: babyUrl,
+    aspect: 'portrait',
   },
   {
     id: 'return-placeholder',
     category: 'return',
     symbol: 'return',
-    title: '[CONTENT TO BE ADDED]',
-    note: '[recurring subject or question to be cataloged]',
+    title: 'Entrances and Spaces in Between',
+    note: 'How doorways frame light, guide movement, and quietly mark transitions from one space into another.',
     domain: 'CYCLE',
     tag: 'RETURN-05',
     date: 'RECURRENT',
-    src: '/src/assets/images/archive_window_1790670851993.jpg',
-    alt: 'Contemplative view through a window overlooking soft sky',
-    aspect: 'landscape',
+    src: doorUrl,
+    aspect: 'portrait',
   },
 ];
 
@@ -397,7 +454,7 @@ export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ className = '' }
         id="archive-grid"
         role="region"
         aria-label="Archive Items"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 items-stretch"
+        className="grid grid-cols-1 md:grid-cols-2 gap-7 sm:gap-8 lg:gap-10 items-stretch"
       >
         {filteredItems.map((item, idx) => (
           <ArchiveCard key={item.id} item={item} index={idx} />

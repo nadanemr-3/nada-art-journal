@@ -1,9 +1,11 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ContinuousLine } from '../visual/ContinuousLine';
 import { HandDrawnStroke } from '../visual/HandDrawnStroke';
 import { NadaSymbol } from '../visual/NadaSymbol';
+import { CompassMark, ObservationCircleMark, HandDrawnArrow, RegistrationCrossMark } from '../visual/EditorialMarks';
 import { HeroArtwork } from './HeroArtwork';
+import signatureUrl from '../../assets/images/signature.png';
 
 export interface HeroProps {
   className?: string;
@@ -20,6 +22,14 @@ export interface HeroProps {
  */
 export const Hero: React.FC<HeroProps> = ({ className = '', portraitSrc }) => {
   const shouldReduceMotion = useReducedMotion();
+  const heroLineRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: heroLineRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const heroLineProgress = useTransform(scrollYProgress, [0.0, 0.5], [0, 1]);
 
   // Animation variants calibrated for editorial restraint
   const fadeUp = (delay: number) =>
@@ -63,6 +73,11 @@ export const Hero: React.FC<HeroProps> = ({ className = '', portraitSrc }) => {
         {/* Right: Folio Entry Stamp & Observation Coordinates */}
         <div className="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] font-body tracking-[0.16em] uppercase text-ink/75">
           <span className="hidden md:inline-flex items-center gap-1.5 text-ink/70 font-medium">
+            <CompassMark size={14} color="#E85D8E" />
+            <span>[ 29°58'N · 31°15'E ]</span>
+          </span>
+          <span className="hidden md:inline text-soft-pink select-none" aria-hidden="true">/</span>
+          <span className="hidden md:inline-flex items-center gap-1.5 text-ink/70 font-medium">
             <span className="w-1.5 h-1.5 rounded-full bg-warm-sun inline-block" />
             <span>FOLIO ENTRY 01</span>
           </span>
@@ -93,73 +108,117 @@ export const Hero: React.FC<HeroProps> = ({ className = '', portraitSrc }) => {
           </motion.div>
 
           {/* Identity: NADA */}
-          <motion.div {...fadeUp(0.35)} className="relative inline-block">
+          <motion.div
+            className="group/hero-title relative inline-block cursor-default"
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+            whileHover={shouldReduceMotion ? undefined : { x: 2, transition: { duration: 0.2, ease: 'easeOut' } }}
+          >
             <div className="flex items-baseline gap-3 sm:gap-4 flex-wrap">
-              <h1 className="type-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-ink font-semibold tracking-[-0.035em] leading-[0.95]">
+              <h1 className="type-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-ink font-semibold tracking-[-0.035em] leading-[0.95] transition-colors duration-300 group-hover/hero-title:text-ink/95">
                 NADA
               </h1>
-              <span className="type-handwriting-note text-sm sm:text-base lg:text-lg text-ink/75 italic select-none pb-2 sm:pb-3">
+              <motion.span
+                className="type-handwriting-note text-sm sm:text-base lg:text-lg text-ink/75 italic select-none pb-2 sm:pb-3 transition-colors duration-200 group-hover/hero-title:text-deep-pink"
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.9 }}
+              >
                 (a personal notebook)
-              </span>
+              </motion.span>
             </div>
             {/* Subtle organic curiosity scribble next to identity */}
-            <div className="absolute -top-3 sm:-top-5 -right-8 sm:-right-12 pointer-events-none opacity-85">
+            <motion.div
+              className="absolute -top-3 sm:-top-5 -right-8 sm:-right-12 pointer-events-none transition-transform duration-300 group-hover/hero-title:rotate-6 group-hover/hero-title:scale-105"
+              initial={shouldReduceMotion ? { opacity: 0.85 } : { opacity: 0, scale: 0.8, rotate: -10 }}
+              animate={{ opacity: 0.85, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.7, delay: 1.1, ease: 'easeOut' }}
+            >
               <HandDrawnStroke variant="scribble" color="#E85D8E" strokeWidth={2.2} />
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Central Statement: I NOTICE THINGS. */}
-          <motion.div {...fadeUp(0.5)} className="mt-6 sm:mt-8 max-w-xl">
-            <h2 className="type-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-ink/90 font-normal tracking-[-0.02em] leading-[1.12]">
+          <motion.div
+            className="group/notice mt-6 sm:mt-8 max-w-xl cursor-default"
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.55 }}
+          >
+            <h2 className="type-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-ink/90 font-normal tracking-[-0.02em] leading-[1.12] transition-colors duration-200 group-hover/notice:text-ink">
               I NOTICE THINGS.
             </h2>
-            <div className="w-36 sm:w-48 mt-2 opacity-85 pointer-events-none">
+            <motion.div
+              className="w-36 sm:w-48 mt-2 pointer-events-none transition-transform duration-300 group-hover/notice:scale-x-105"
+              initial={shouldReduceMotion ? { opacity: 0.85 } : { opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 0.85, scaleX: 1 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 1.0 }}
+              style={{ originX: 0 }}
+            >
               <HandDrawnStroke variant="underline" color="#E85D8E" strokeWidth={2.8} />
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Supporting Micro Narrative Fragment */}
           <motion.div
             {...fadeUp(0.65)}
-            className="mt-6 sm:mt-7 flex items-baseline gap-3 text-sm sm:text-base text-ink/75 max-w-md"
+            className="mt-6 sm:mt-7 flex items-baseline gap-3 text-sm sm:text-base text-ink/75 max-w-md relative"
           >
             <NadaSymbol name="thought" size={15} color="#E85D8E" className="select-none shrink-0" />
             <p className="type-body text-xs sm:text-sm tracking-wide text-ink/80 font-medium leading-relaxed">
               the unexpected patterns, the overlooked details, the way light shifts, and why things are the way they are.
             </p>
+            {/* Subtle intentional observation mark */}
+            <div className="hidden sm:inline-flex items-center gap-1.5 absolute -right-16 top-0 opacity-70 pointer-events-none select-none text-[9px] font-mono text-deep-pink">
+              <HandDrawnArrow direction="right" size={24} color="#E85D8E" strokeWidth={1.5} />
+              <span>[noticing]</span>
+            </div>
           </motion.div>
 
           {/* Art Journal Tactile Marginalia & Swatch Strip */}
           <motion.div
             {...fadeUp(0.8)}
-            className="mt-8 sm:mt-10 pt-5 border-t border-soft-pink/35 flex flex-wrap items-center gap-y-3 gap-x-6 text-xs text-ink/75"
+            className="mt-8 sm:mt-10 pt-5 border-t border-soft-pink/35 flex flex-wrap items-center justify-between gap-y-3.5 gap-x-6 text-xs text-ink/75"
           >
-            {/* Micro Palette Swatch Chips */}
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-body font-semibold tracking-[0.16em] uppercase text-deep-pink">
-                PALETTE
-              </span>
-              <div className="flex items-center gap-1.5" title="Journal ink colors">
-                <span className="w-2.5 h-2.5 rounded-full bg-signature-pink shadow-xs hover:scale-125 transition-transform duration-200 cursor-pointer" title="Signature Pink" />
-                <span className="w-2.5 h-2.5 rounded-full bg-soft-pink border border-signature-pink/30 shadow-xs hover:scale-125 transition-transform duration-200 cursor-pointer" title="Soft Pink" />
-                <span className="w-2.5 h-2.5 rounded-full bg-warm-sun shadow-xs hover:scale-125 transition-transform duration-200 cursor-pointer" title="Warm Sun" />
-                <span className="w-2.5 h-2.5 rounded-full bg-sea shadow-xs hover:scale-125 transition-transform duration-200 cursor-pointer" title="Sea" />
-                <span className="w-2.5 h-2.5 rounded-full bg-ink shadow-xs hover:scale-125 transition-transform duration-200 cursor-pointer" title="Ink" />
+            {/* Left Cluster: Micro Palette Swatch Chips & Artist Note */}
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-5">
+              {/* Micro Palette Swatch Chips */}
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-body font-semibold tracking-[0.16em] uppercase text-deep-pink">
+                  PALETTE
+                </span>
+                <div className="flex items-center gap-1.5" title="Journal ink colors">
+                  <button type="button" aria-label="Signature Pink pigment" className="w-2.5 h-2.5 rounded-full bg-signature-pink shadow-xs hover:scale-130 focus-visible:scale-130 focus-visible:outline-2 focus-visible:outline-signature-pink transition-transform duration-200 cursor-pointer" />
+                  <button type="button" aria-label="Soft Pink pigment" className="w-2.5 h-2.5 rounded-full bg-soft-pink border border-signature-pink/30 shadow-xs hover:scale-130 focus-visible:scale-130 focus-visible:outline-2 focus-visible:outline-signature-pink transition-transform duration-200 cursor-pointer" />
+                  <button type="button" aria-label="Warm Sun pigment" className="w-2.5 h-2.5 rounded-full bg-warm-sun shadow-xs hover:scale-130 focus-visible:scale-130 focus-visible:outline-2 focus-visible:outline-warm-sun transition-transform duration-200 cursor-pointer" />
+                  <button type="button" aria-label="Sea pigment" className="w-2.5 h-2.5 rounded-full bg-sea shadow-xs hover:scale-130 focus-visible:scale-130 focus-visible:outline-2 focus-visible:outline-sea transition-transform duration-200 cursor-pointer" />
+                  <button type="button" aria-label="Ink pigment" className="w-2.5 h-2.5 rounded-full bg-ink shadow-xs hover:scale-130 focus-visible:scale-130 focus-visible:outline-2 focus-visible:outline-ink transition-transform duration-200 cursor-pointer" />
+                </div>
+                <span className="text-[10px] font-body text-ink/65 tracking-wider font-medium">
+                  [ inks & notes ]
+                </span>
               </div>
-              <span className="text-[10px] font-body text-ink/65 tracking-wider font-medium">
-                [ inks & notes ]
-              </span>
+
+              {/* Handwritten artist note — Discovery 1 */}
+              <div className="group flex items-center gap-1.5 cursor-default">
+                <NadaSymbol name="spark" size={13} color="#E85D8E" className="select-none shrink-0 group-hover:scale-110 transition-transform duration-200" />
+                <span className="type-handwriting-note text-xs sm:text-[13px] text-ink/80 italic group-hover:text-deep-pink transition-colors">
+                  "paying attention is an act of love."
+                </span>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-[10px] font-mono text-deep-pink tracking-wider select-none hidden sm:inline">
+                  [ noticed ✦ ]
+                </span>
+              </div>
             </div>
 
-            {/* Handwritten artist note — Discovery 1 */}
-            <div className="group flex items-center gap-1.5 cursor-default">
-              <NadaSymbol name="spark" size={13} color="#E85D8E" className="select-none shrink-0 group-hover:scale-110 transition-transform duration-200" />
-              <span className="type-handwriting-note text-xs sm:text-[13px] text-ink/80 italic group-hover:text-deep-pink transition-colors">
-                "paying attention is an act of love."
-              </span>
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-[10px] font-mono text-deep-pink tracking-wider select-none hidden sm:inline">
-                [ noticed ✦ ]
-              </span>
+            {/* Authentic artist signature — tiny handwritten personal mark (10px mobile, 11px tablet, 12px desktop) */}
+            <div className="inline-flex items-center pl-1 select-none pointer-events-none" aria-hidden="true">
+              <img
+                src={signatureUrl}
+                alt="Nada Nemr signature"
+                className="h-[10px] sm:h-[11px] md:h-[12px] w-auto object-contain select-none pointer-events-none"
+              />
             </div>
           </motion.div>
 
@@ -173,6 +232,7 @@ export const Hero: React.FC<HeroProps> = ({ className = '', portraitSrc }) => {
 
       {/* Signature Continuous Pink Line leading downward with Journal Ledger Bar */}
       <motion.div
+        ref={heroLineRef}
         className="w-full mt-10 sm:mt-16 pt-4"
         initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -183,6 +243,7 @@ export const Hero: React.FC<HeroProps> = ({ className = '', portraitSrc }) => {
             state="hero"
             color="#E85D8E"
             strokeWidth={3}
+            progress={shouldReduceMotion ? undefined : heroLineProgress}
             animated={!shouldReduceMotion}
             className="w-full max-w-4xl mx-auto"
           />

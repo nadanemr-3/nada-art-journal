@@ -29,9 +29,9 @@ export const NadaSignature: React.FC<NadaSignatureProps> = ({
   // If an authentic signature asset exists in the future, render it cleanly
   if (src) {
     const sizeClasses = {
-      sm: 'h-6 sm:h-7',
-      md: 'h-8 sm:h-10',
-      lg: 'h-11 sm:h-14',
+      sm: 'h-[20px] sm:h-[24px] md:h-[28px]',
+      md: 'h-[32px] sm:h-[38px] md:h-[44px]',
+      lg: 'h-[44px] sm:h-[50px] md:h-[56px]',
     }[size];
 
     return (
@@ -39,7 +39,7 @@ export const NadaSignature: React.FC<NadaSignatureProps> = ({
         <img
           src={src}
           alt="Nada"
-          className={`${sizeClasses} w-auto object-contain select-none`}
+          className={`${sizeClasses} w-auto object-contain select-none pointer-events-none`}
         />
         {subtitle && (
           <span className="type-handwriting-note text-xs text-ink/75 italic mt-1 select-none">

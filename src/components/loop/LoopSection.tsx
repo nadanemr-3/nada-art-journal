@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { HandDrawnStroke } from '../visual/HandDrawnStroke';
 import { NadaSymbol } from '../visual/NadaSymbol';
+import { ObservationCircleMark, SunBurstMark, WaveletMark, HandDrawnArrow, PencilRulerTicks, RegistrationCrossMark } from '../visual/EditorialMarks';
 
 export interface LoopSectionProps {
   className?: string;
@@ -230,7 +231,12 @@ export const LoopSection: React.FC<LoopSectionProps> = ({ className = '' }) => {
         <div className="flex justify-between items-start pt-4 px-2">
           
           {/* 01 NOTICE */}
-          <div className="group/moment w-[16%] flex flex-col text-left transition-transform duration-200 hover:-translate-y-0.5 cursor-default">
+          <div
+            tabIndex={0}
+            role="region"
+            aria-label="01 NOTICE: Something catches my eye."
+            className="group/moment w-[16%] flex flex-col text-left transition-all duration-200 hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:outline-2 focus-visible:outline-signature-pink/60 p-2 -m-2 rounded-xl cursor-default"
+          >
             <div className="flex items-center gap-1.5 text-[11px] font-mono font-semibold text-deep-pink tracking-wider mb-1.5">
               <span>01</span>
               <span className="text-soft-pink">/</span>
@@ -245,7 +251,12 @@ export const LoopSection: React.FC<LoopSectionProps> = ({ className = '' }) => {
           </div>
 
           {/* 02 WONDER */}
-          <div className="group/moment w-[18%] flex flex-col text-left transition-transform duration-200 hover:-translate-y-0.5 cursor-default">
+          <div
+            tabIndex={0}
+            role="region"
+            aria-label="02 WONDER: I want to know why."
+            className="group/moment w-[18%] flex flex-col text-left transition-all duration-200 hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:outline-2 focus-visible:outline-signature-pink/60 p-2 -m-2 rounded-xl cursor-default"
+          >
             <div className="flex items-center gap-1.5 text-[11px] font-mono font-semibold text-deep-pink tracking-wider mb-1.5">
               <span>02</span>
               <span className="text-soft-pink">/</span>
@@ -260,7 +271,12 @@ export const LoopSection: React.FC<LoopSectionProps> = ({ className = '' }) => {
           </div>
 
           {/* 03 MAKE — Richest / Largest visual moment */}
-          <div className="group/moment w-[26%] flex flex-col text-left p-4 -mt-2 rounded-2xl bg-[#FFFDF9] border border-soft-pink/45 shadow-[0_4px_16px_rgba(36,33,42,0.03)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(36,33,42,0.06)] cursor-default">
+          <div
+            tabIndex={0}
+            role="region"
+            aria-label="03 MAKE: So I make something from it."
+            className="group/moment w-[26%] flex flex-col text-left p-4 -mt-2 rounded-2xl bg-[#FFFDF9] border border-soft-pink/45 shadow-[0_4px_16px_rgba(36,33,42,0.03)] transition-all duration-200 hover:-translate-y-1.5 focus-visible:-translate-y-1.5 focus-visible:outline-2 focus-visible:outline-signature-pink/60 hover:shadow-[0_8px_24px_rgba(36,33,42,0.06)] cursor-default"
+          >
             <div className="flex items-center justify-between text-[11px] font-mono font-semibold text-deep-pink tracking-wider mb-1.5">
               <div className="flex items-center gap-1.5">
                 <span>03</span>
@@ -282,7 +298,12 @@ export const LoopSection: React.FC<LoopSectionProps> = ({ className = '' }) => {
           </div>
 
           {/* 04 LIVE — Open / Sensory moment */}
-          <div className="group/moment w-[20%] flex flex-col text-left pl-2 transition-transform duration-200 hover:-translate-y-0.5 cursor-default">
+          <div
+            tabIndex={0}
+            role="region"
+            aria-label="04 LIVE: Then I take it into the world."
+            className="group/moment w-[20%] flex flex-col text-left pl-2 transition-all duration-200 hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:outline-2 focus-visible:outline-sea/60 p-2 -m-2 rounded-xl cursor-default"
+          >
             <div className="flex items-center gap-1.5 text-[11px] font-mono font-semibold text-sea tracking-wider mb-1.5">
               <span>04</span>
               <span className="text-soft-pink">/</span>
@@ -299,7 +320,12 @@ export const LoopSection: React.FC<LoopSectionProps> = ({ className = '' }) => {
           </div>
 
           {/* 05 NOTICE AGAIN — The New Beginning & Discovery 2 */}
-          <div className="group/moment w-[18%] flex flex-col text-left transition-transform duration-200 hover:-translate-y-0.5 cursor-default">
+          <div
+            tabIndex={0}
+            role="region"
+            aria-label="05 NOTICE AGAIN: And the world gives me something new to notice."
+            className="group/moment w-[18%] flex flex-col text-left transition-all duration-200 hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:outline-2 focus-visible:outline-signature-pink/60 p-2 -m-2 rounded-xl cursor-default"
+          >
             <div className="flex items-center gap-1.5 text-[11px] font-mono font-semibold text-deep-pink tracking-wider mb-1.5">
               <span>05</span>
               <span className="text-soft-pink">/</span>

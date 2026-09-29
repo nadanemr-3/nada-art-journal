@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ContinuousLine } from '../visual/ContinuousLine';
 import { HandDrawnStroke } from '../visual/HandDrawnStroke';
+import { SunBurstMark, WaveletMark, HandDrawnArrow, RegistrationCrossMark } from '../visual/EditorialMarks';
 import { LiveMoment } from './LiveMoment';
 import volleyballUrl from '../../../volleyball.jpg';
 import shipsUrl from '../../../ships.jpg';
@@ -168,6 +169,11 @@ export const LiveSection: React.FC<LiveSectionProps> = ({ className = '' }) => {
               location="horizon"
               theme="PLACES"
             />
+            {/* Subtle observational arrow pointing toward the horizon */}
+            <div className="hidden sm:flex items-center gap-1.5 absolute -right-6 -bottom-5 opacity-70 pointer-events-none select-none text-[9px] font-mono text-sea">
+              <HandDrawnArrow direction="up-right" size={20} color="#55B9C6" strokeWidth={1.5} />
+              <span>[ships on the horizon]</span>
+            </div>
           </div>
 
         </div>

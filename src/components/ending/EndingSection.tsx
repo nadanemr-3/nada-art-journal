@@ -2,7 +2,9 @@ import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ContinuousLine } from '../visual/ContinuousLine';
 import { NadaSignature } from '../visual/NadaSignature';
+import signatureUrl from '../../assets/images/signature.png';
 import { NadaSymbol } from '../visual/NadaSymbol';
+import { NotebookBindingStitch, RegistrationCrossMark } from '../visual/EditorialMarks';
 
 export interface EndingSectionProps {
   className?: string;
@@ -65,18 +67,34 @@ export const EndingSection: React.FC<EndingSectionProps> = ({ className = '' }) 
       <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative">
         
         {/* Tactile Final Sheet Wrapper */}
-        <motion.div
-          className="w-full rounded-3xl bg-[#FFFDF9] border border-soft-pink/50 shadow-[0_6px_28px_rgba(36,33,42,0.03)] p-8 sm:p-12 lg:p-16 relative"
-          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
-        >
-          {/* Tactile corner crop marks */}
-          <div className="absolute top-3 left-3 text-ink/20 text-[10px] font-mono pointer-events-none select-none" aria-hidden="true">⌜</div>
-          <div className="absolute top-3 right-3 text-ink/20 text-[10px] font-mono pointer-events-none select-none" aria-hidden="true">⌝</div>
-          <div className="absolute bottom-3 left-3 text-ink/20 text-[10px] font-mono pointer-events-none select-none" aria-hidden="true">⌞</div>
-          <div className="absolute bottom-3 right-3 text-ink/20 text-[10px] font-mono pointer-events-none select-none" aria-hidden="true">⌟</div>
+        <div className="relative w-full">
+          {/* Underlying sketchbook paper sheet peeking out to create physical notebook depth */}
+          <div
+            className="absolute inset-1 sm:inset-2 -z-10 rounded-3xl bg-warm-ivory border border-soft-pink/40 shadow-xs pointer-events-none transform rotate-[0.8deg]"
+            aria-hidden="true"
+          />
+
+          <motion.div
+            tabIndex={0}
+            role="region"
+            aria-label="Journal Closing Page"
+            className="w-full rounded-3xl bg-[#FFFDF9] border border-soft-pink/50 shadow-[0_6px_28px_rgba(36,33,42,0.03)] p-8 sm:p-12 lg:p-16 relative transition-all duration-300 hover:shadow-[0_12px_36px_rgba(36,33,42,0.06)] focus-visible:outline-2 focus-visible:outline-signature-pink/70 transform -rotate-[0.4deg] hover:rotate-0"
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+            whileHover={shouldReduceMotion ? undefined : { y: -2, transition: { duration: 0.3, ease: 'easeOut' } }}
+          >
+            {/* Notebook binding stitch marks along top edge */}
+            <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 pointer-events-none select-none">
+              <NotebookBindingStitch orientation="horizontal" count={5} color="#E85D8E" />
+            </div>
+
+            {/* Tactile corner crop marks */}
+            <div className="absolute top-3 left-3 text-ink/20 text-[10px] font-mono pointer-events-none select-none" aria-hidden="true">⌜</div>
+            <div className="absolute top-3 right-3 text-ink/20 text-[10px] font-mono pointer-events-none select-none" aria-hidden="true">⌝</div>
+            <div className="absolute bottom-3 left-3 text-ink/20 text-[10px] font-mono pointer-events-none select-none" aria-hidden="true">⌞</div>
+            <div className="absolute bottom-3 right-3 text-ink/20 text-[10px] font-mono pointer-events-none select-none" aria-hidden="true">⌟</div>
 
           {/* Top Marker: Visual Callback to Route Line & Observation Node */}
           <motion.div
@@ -128,8 +146,13 @@ export const EndingSection: React.FC<EndingSectionProps> = ({ className = '' }) 
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.45 }}
           >
-            {/* Standardized NADA Signature Treatment */}
-            <NadaSignature size="md" />
+            {/* Standardized NADA Signature Treatment with gentle hover response */}
+            <motion.div
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.02, transition: { duration: 0.25 } }}
+              className="cursor-default"
+            >
+              <NadaSignature src={signatureUrl} size="md" />
+            </motion.div>
 
             {/* Say hi ♡ (Warm, human note) */}
             <motion.div
@@ -141,11 +164,11 @@ export const EndingSection: React.FC<EndingSectionProps> = ({ className = '' }) 
             >
               <a
                 href="mailto:nadanemr23@gmail.com"
-                className="inline-flex items-center gap-1.5 hover:text-deep-pink hover:scale-105 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-signature-pink rounded-sm"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-soft-pink/30 hover:border-signature-pink/50 bg-warm-ivory/60 hover:bg-warm-ivory hover:text-deep-pink hover:scale-105 active:scale-98 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-signature-pink shadow-2xs"
                 title="Send a note to Nada"
               >
                 <span>Say hi</span>
-                <span className="text-signature-pink">♡</span>
+                <span className="text-signature-pink animate-pulse">♡</span>
               </a>
             </motion.div>
 
@@ -155,19 +178,20 @@ export const EndingSection: React.FC<EndingSectionProps> = ({ className = '' }) 
               <span className="text-soft-pink">·</span>
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="group/return inline-flex items-center gap-1.5 text-deep-pink hover:text-signature-pink transition-colors focus-visible:outline-2 focus-visible:outline-signature-pink rounded px-1 py-0.5 cursor-pointer"
+                className="group/return inline-flex items-center gap-1.5 text-deep-pink hover:text-signature-pink transition-colors focus-visible:outline-2 focus-visible:outline-signature-pink rounded px-1.5 py-0.5 cursor-pointer hover:bg-soft-pink/15"
                 title="Return to page 01"
                 aria-label="Return to beginning of journal"
               >
                 <span>LOOKING BEGINS AGAIN</span>
-                <NadaSymbol name="return" size={13} color="currentColor" className="inline-block transition-transform duration-300 group-hover/return:-rotate-90" />
-                <span className="opacity-0 group-hover/return:opacity-100 transition-opacity duration-300 text-[9px] lowercase font-normal hidden sm:inline">[page 01]</span>
+                <NadaSymbol name="return" size={13} color="currentColor" className="inline-block transition-transform duration-300 group-hover/return:-rotate-90 group-focus-visible/return:-rotate-90" />
+                <span className="opacity-0 group-hover/return:opacity-100 group-focus-visible/return:opacity-100 transition-opacity duration-300 text-[9px] lowercase font-normal hidden sm:inline">[page 01]</span>
               </button>
               <span>]</span>
             </div>
           </motion.div>
 
         </motion.div>
+        </div>
 
         {/* Quiet Loop Continuation Horizon */}
         <motion.div

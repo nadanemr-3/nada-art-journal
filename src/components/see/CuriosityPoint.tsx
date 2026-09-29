@@ -192,17 +192,20 @@ export const CuriosityPoint: React.FC<CuriosityPointProps> = ({
 
       {/* Field Notebook Card Surface */}
       <div
-        className={`relative flex flex-col justify-between p-4 sm:p-5 rounded-2xl transition-all duration-300 ease-out group-hover:-translate-y-1 ${
+        tabIndex={0}
+        role="region"
+        aria-label={`${label}: ${annotation}`}
+        className={`relative flex flex-col justify-between p-4 sm:p-5 rounded-2xl transition-all duration-300 ease-out group-hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:outline-2 focus-visible:outline-signature-pink/70 cursor-default ${
           isTechnology ? 'lg:px-2.5 lg:py-4.5 xl:px-3.5 xl:py-5' : ''
         } ${
           isWhy
-            ? 'bg-[#FFFDF9] border border-signature-pink/55 shadow-[0_6px_20px_rgba(232,93,142,0.08)] transform sm:rotate-[1.2deg] group-hover:rotate-0 group-hover:shadow-[0_12px_28px_rgba(232,93,142,0.12)]'
-            : 'bg-[#FFFDF9]/95 border border-soft-pink/50 shadow-[0_2px_12px_rgba(36,33,42,0.03)] group-hover:border-soft-pink/80 group-hover:shadow-[0_8px_24px_rgba(36,33,42,0.06)]'
+            ? 'bg-[#FFFDF9] border border-signature-pink/55 shadow-[0_6px_20px_rgba(232,93,142,0.08)] transform sm:rotate-[1.2deg] group-hover:rotate-0 group-focus-visible:rotate-0 group-hover:shadow-[0_12px_28px_rgba(232,93,142,0.12)]'
+            : 'bg-[#FFFDF9]/95 border border-soft-pink/50 shadow-[0_2px_12px_rgba(36,33,42,0.03)] group-hover:border-soft-pink/80 group-focus-visible:border-soft-pink/80 group-hover:shadow-[0_8px_24px_rgba(36,33,42,0.06)]'
         }`}
       >
         {/* Paper tape accent on WHY */}
         {isWhy && (
-          <WashiTape color="sun" angle="tilt-right" width="w-9" height="h-4" className="absolute -top-2.5 right-4 transition-transform duration-300 group-hover:rotate-6" />
+          <WashiTape color="sun" angle="tilt-right" width="w-9" height="h-4" className="absolute -top-2.5 right-4 transition-transform duration-300 group-hover:rotate-6 group-focus-visible:rotate-6" />
         )}
 
         {/* Top Field Index Row */}
@@ -261,13 +264,11 @@ export const CuriosityPoint: React.FC<CuriosityPointProps> = ({
           </div>
         )}
 
-        {/* Subtle registration corner crosshair */}
-        <div
-          className="absolute bottom-1.5 right-2 text-ink/20 text-[9px] font-mono pointer-events-none select-none"
-          aria-hidden="true"
-        >
-          +
-        </div>
+        {/* Corner registration marks */}
+        <div className="absolute top-1.5 left-2 text-ink/20 text-[9px] font-mono pointer-events-none select-none" aria-hidden="true">⌜</div>
+        <div className="absolute top-1.5 right-2 text-ink/20 text-[9px] font-mono pointer-events-none select-none" aria-hidden="true">⌝</div>
+        <div className="absolute bottom-1.5 left-2 text-ink/20 text-[9px] font-mono pointer-events-none select-none" aria-hidden="true">⌞</div>
+        <div className="absolute bottom-1.5 right-2 text-ink/20 text-[9px] font-mono pointer-events-none select-none" aria-hidden="true">⌟</div>
       </div>
     </motion.div>
   );

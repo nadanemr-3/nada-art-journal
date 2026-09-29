@@ -6,3 +6,4 @@ export * from './WashiTape';
 export * from './NadaSignature';
 export * from './JournalCursor';
 export * from './NadaLogo';
+export * from './EditorialMarks';

@@ -1,7 +1,8 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { HandDrawnStroke } from '../visual/HandDrawnStroke';
 import { ContinuousLine } from '../visual/ContinuousLine';
+import { PencilRulerTicks, RegistrationCrossMark, HandDrawnArrow } from '../visual/EditorialMarks';
 import { MakeArtwork } from './MakeArtwork';
 import drawingUrl from '../../../drawing.jpg';
 import vaseUrl from '../../../vase-opt.webp';
@@ -61,6 +62,14 @@ const PROCESS_STEPS = [
  */
 export const MakeSection: React.FC<MakeSectionProps> = ({ className = '' }) => {
   const shouldReduceMotion = useReducedMotion();
+  const spineRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress: spineScroll } = useScroll({
+    target: spineRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const spineOpacity = useTransform(spineScroll, [0.05, 0.25], [0, 1]);
 
   return (
     <section
@@ -128,19 +137,49 @@ export const MakeSection: React.FC<MakeSectionProps> = ({ className = '' }) => {
           </div>
 
           {/* Conceptual Spine: IDEA → EXPERIMENT → PROCESS → THING */}
-          <div className="mt-6 flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-mono text-ink/75 pt-2">
-            <span className="text-deep-pink font-semibold uppercase tracking-wider">IDEA</span>
-            <span className="text-signature-pink select-none font-display">→</span>
-            <span className="text-ink/85 font-medium uppercase tracking-wider">EXPERIMENT</span>
-            <span className="text-signature-pink select-none font-display">→</span>
-            <span className="text-ink/85 font-medium uppercase tracking-wider">PROCESS</span>
-            <span className="text-signature-pink select-none font-display">→</span>
-            <span className="text-deep-pink font-semibold uppercase tracking-wider">THING</span>
-            <span className="hidden md:inline text-soft-pink select-none mx-1">·</span>
-            <span className="hidden md:inline type-handwriting-note text-xs text-ink/80 italic">
-              (from an observation to something you can hold or use)
-            </span>
-          </div>
+          <motion.div
+            ref={spineRef}
+            className="mt-6 flex flex-col gap-2 pt-2"
+            style={shouldReduceMotion ? undefined : { opacity: spineOpacity }}
+          >
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-mono text-ink/75">
+              {['IDEA', 'EXPERIMENT', 'PROCESS', 'THING'].map((step, idx) => (
+                <React.Fragment key={step}>
+                  <motion.span
+                    className={`uppercase tracking-wider ${
+                      idx === 0 || idx === 3 ? 'text-deep-pink font-semibold' : 'text-ink/85 font-medium'
+                    }`}
+                    initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -6 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: '-30px' }}
+                    transition={{ duration: 0.4, ease: 'easeOut', delay: idx * 0.12 }}
+                  >
+                    {step}
+                  </motion.span>
+                  {idx < 3 && (
+                    <motion.span
+                      className="text-signature-pink select-none font-display"
+                      initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true, margin: '-30px' }}
+                      transition={{ duration: 0.3, delay: idx * 0.12 + 0.08 }}
+                    >
+                      →
+                    </motion.span>
+                  )}
+                </React.Fragment>
+              ))}
+              <span className="hidden md:inline text-soft-pink select-none mx-1">·</span>
+              <span className="hidden md:inline type-handwriting-note text-xs text-ink/80 italic">
+                (from an observation to something you can hold or use)
+              </span>
+            </div>
+            {/* Studio pencil ruler ticks */}
+            <div className="flex items-center gap-2 pt-1 opacity-60">
+              <PencilRulerTicks length="md" color="#B93668" />
+              <span className="text-[9px] font-mono text-ink/50 tracking-wider">[ 01-04 WORKBENCH SCALE ]</span>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Quiet Discipline Rhythm Strip & Process Note */}
@@ -313,13 +352,32 @@ export const MakeSection: React.FC<MakeSectionProps> = ({ className = '' }) => {
         {/* 4 Process Columns */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {PROCESS_STEPS.map((step, idx) => (
-            <div key={step.step} className="group/step flex flex-col gap-1.5 relative p-2.5 -m-1 sm:-m-2 rounded-xl transition-all duration-200 hover:bg-warm-ivory/90 hover:shadow-2xs">
+            <motion.div
+              key={step.step}
+              tabIndex={0}
+              role="region"
+              aria-label={`${step.step} ${step.title}: ${step.subtitle}`}
+              className="group/step flex flex-col gap-1.5 relative p-2.5 -m-1 sm:-m-2 rounded-xl transition-all duration-200 hover:bg-warm-ivory/95 hover:shadow-2xs focus-visible:bg-warm-ivory/95 focus-visible:outline-2 focus-visible:outline-signature-pink/60 cursor-default"
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-30px' }}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: idx * 0.1 }}
+              whileHover={shouldReduceMotion ? undefined : { y: -2, transition: { duration: 0.2 } }}
+            >
               <div className="flex items-baseline justify-between">
                 <span className="font-mono text-xs font-semibold text-deep-pink tracking-wider group-hover/step:text-signature-pink transition-colors">
                   {step.step}. {step.title}
                 </span>
                 {idx < PROCESS_STEPS.length - 1 && (
-                  <span className="hidden lg:inline text-signature-pink font-display select-none transition-transform duration-200 group-hover/step:translate-x-1">→</span>
+                  <motion.span
+                    className="hidden lg:inline text-signature-pink font-display select-none transition-transform duration-200 group-hover/step:translate-x-1"
+                    initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -4 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: '-30px' }}
+                    transition={{ duration: 0.3, delay: idx * 0.1 + 0.2 }}
+                  >
+                    →
+                  </motion.span>
                 )}
               </div>
               <span className="text-[10px] font-mono tracking-wider uppercase text-ink/65">
@@ -328,7 +386,7 @@ export const MakeSection: React.FC<MakeSectionProps> = ({ className = '' }) => {
               <p className="type-handwriting-note text-xs sm:text-[13px] text-ink/80 italic leading-snug">
                 {step.description}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </motion.div>

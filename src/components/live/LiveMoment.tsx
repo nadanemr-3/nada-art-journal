@@ -48,18 +48,23 @@ export const LiveMoment: React.FC<LiveMomentProps> = ({
       case 'primary': {
         // Dominant Hero Photograph: Outdoor Volleyball in Sunshine
         return (
-          <div className={`relative group ${className}`}>
+          <div
+            tabIndex={0}
+            role="region"
+            aria-label="Moment 01: Outdoor volleyball game in the sunlight"
+            className={`relative group rounded-2xl sm:rounded-3xl focus-visible:outline-2 focus-visible:outline-sea/70 ${className}`}
+          >
             {/* Subtle paper shadow sheet beneath for tactile journal depth */}
             <div
-              className="absolute inset-1 sm:inset-2 -z-10 rounded-2xl sm:rounded-3xl bg-warm-ivory border border-soft-pink/40 shadow-xs pointer-events-none transform -rotate-[1deg] transition-transform duration-300 group-hover:-rotate-[1.5deg]"
+              className="absolute inset-1 sm:inset-2 -z-10 rounded-2xl sm:rounded-3xl bg-warm-ivory border border-soft-pink/40 shadow-xs pointer-events-none transform -rotate-[1deg] transition-transform duration-300 group-hover:-rotate-[1.5deg] group-focus-visible:-rotate-[1.5deg]"
               aria-hidden="true"
             />
 
             {/* Front Photo Mount */}
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#FFFDF9] border border-soft-pink/55 shadow-[0_8px_28px_rgba(36,33,42,0.06)] p-3.5 sm:p-5 flex flex-col justify-between transform rotate-[0.5deg] transition-all duration-300 group-hover:rotate-0 group-hover:-translate-y-1 group-hover:shadow-[0_14px_40px_rgba(36,33,42,0.09)]">
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#FFFDF9] border border-soft-pink/55 shadow-[0_8px_28px_rgba(36,33,42,0.06)] p-3.5 sm:p-5 flex flex-col justify-between transform rotate-[0.5deg] transition-all duration-300 group-hover:rotate-0 group-hover:-translate-y-1 group-focus-visible:rotate-0 group-focus-visible:-translate-y-1 group-hover:shadow-[0_14px_40px_rgba(36,33,42,0.09)]">
               
               {/* Sun-gold angled washi tape tab at top center-right */}
-              <WashiTape color="sun" angle="tilt-right" width="w-12 sm:w-14" className="absolute -top-3 right-8 sm:right-12 transition-transform duration-300 group-hover:rotate-3" />
+              <WashiTape color="sun" angle="tilt-right" width="w-12 sm:w-14" className="absolute -top-3 right-8 sm:right-12 transition-transform duration-300 group-hover:rotate-3 group-focus-visible:rotate-3" />
 
               {/* Archival Journal Folio Header */}
               <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-soft-pink/35 text-[10px] sm:text-[11px] font-body tracking-[0.16em] uppercase text-ink/75">
@@ -126,22 +131,27 @@ export const LiveMoment: React.FC<LiveMomentProps> = ({
       case 'landscape': {
         // Landscape Photo: Ships on the Open Sea Horizon
         return (
-          <div className={`relative group ${className}`}>
-            <div className="relative rounded-2xl overflow-hidden bg-[#FFFDF9] border border-soft-pink/55 shadow-[0_4px_20px_rgba(36,33,42,0.05)] p-3.5 sm:p-4.5 flex flex-col justify-between transform -rotate-[0.8deg] transition-all duration-300 group-hover:rotate-0 group-hover:-translate-y-1 group-hover:shadow-[0_12px_32px_rgba(36,33,42,0.08)]">
+          <div
+            tabIndex={0}
+            role="region"
+            aria-label="Moment 02: Ships navigating on the open sea horizon"
+            className={`relative group rounded-2xl focus-visible:outline-2 focus-visible:outline-sea/70 ${className}`}
+          >
+            <div className="relative rounded-2xl overflow-hidden bg-[#FFFDF9] border border-soft-pink/55 shadow-[0_4px_20px_rgba(36,33,42,0.05)] p-3.5 sm:p-4.5 flex flex-col justify-between transform -rotate-[0.8deg] transition-all duration-300 group-hover:rotate-0 group-hover:-translate-y-1 group-focus-visible:rotate-0 group-focus-visible:-translate-y-1 group-hover:shadow-[0_12px_32px_rgba(36,33,42,0.08)]">
               
               {/* Sea-blue washi tape tab at top left */}
-              <WashiTape color="sea" angle="tilt-left" width="w-11" className="absolute -top-2.5 left-6 sm:left-10 transition-transform duration-300 group-hover:-rotate-3" />
+              <WashiTape color="sea" angle="tilt-left" width="w-11" className="absolute -top-2.5 left-6 sm:left-10 transition-transform duration-300 group-hover:-rotate-3 group-focus-visible:-rotate-3" />
 
               {/* Top Header */}
               <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-soft-pink/35 text-[10px] font-mono tracking-wider select-none text-ink/75">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-sea transition-transform duration-200 group-hover:scale-125" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-sea transition-transform duration-200 group-hover:scale-125 group-focus-visible:scale-125" />
                   <span className="font-semibold text-deep-pink">MOMENT 02</span>
                   <span className="text-soft-pink select-none" aria-hidden="true">/</span>
                   <span className="font-medium text-ink/80 font-body uppercase text-[9px]">{theme || 'PLACES'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-mono text-[9px] text-sea font-semibold hidden sm:inline">
+                  <span className="opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 font-mono text-[9px] text-sea font-semibold hidden sm:inline">
                     [ ~ COASTAL HORIZON ]
                   </span>
                   <span className="text-[9px] text-sea font-semibold uppercase tracking-wide">
@@ -174,7 +184,7 @@ export const LiveMoment: React.FC<LiveMomentProps> = ({
 
               {/* Bottom Caption */}
               <div className="mt-2.5 pt-2 border-t border-soft-pink/35 flex items-center justify-between text-xs text-ink/75">
-                <span className="type-handwriting-note italic text-ink/85 text-xs sm:text-sm group-hover:text-deep-pink transition-colors">
+                <span className="type-handwriting-note italic text-ink/85 text-xs sm:text-sm group-hover:text-deep-pink group-focus-visible:text-deep-pink transition-colors">
                   {caption || 'looking out · the sea'}
                 </span>
                 <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-ink/70">
@@ -192,22 +202,27 @@ export const LiveMoment: React.FC<LiveMomentProps> = ({
       case 'portrait': {
         // Vertical Portrait Moment: Quiet by the Water
         return (
-          <div className={`relative group ${className}`}>
-            <div className="relative rounded-2xl overflow-hidden bg-[#FFFDF9] border border-soft-pink/55 shadow-[0_4px_20px_rgba(36,33,42,0.05)] p-3.5 sm:p-4.5 flex flex-col justify-between transform rotate-[1.2deg] transition-all duration-300 group-hover:rotate-0 group-hover:-translate-y-1 group-hover:shadow-[0_12px_32px_rgba(36,33,42,0.08)]">
+          <div
+            tabIndex={0}
+            role="region"
+            aria-label="Moment 03: Calm sea waters extending to the horizon"
+            className={`relative group rounded-2xl focus-visible:outline-2 focus-visible:outline-sea/70 ${className}`}
+          >
+            <div className="relative rounded-2xl overflow-hidden bg-[#FFFDF9] border border-soft-pink/55 shadow-[0_4px_20px_rgba(36,33,42,0.05)] p-3.5 sm:p-4.5 flex flex-col justify-between transform rotate-[1.2deg] transition-all duration-300 group-hover:rotate-0 group-hover:-translate-y-1 group-focus-visible:rotate-0 group-focus-visible:-translate-y-1 group-hover:shadow-[0_12px_32px_rgba(36,33,42,0.08)]">
               
               {/* Sun-gold corner tab */}
-              <WashiTape color="sun" angle="tilt-right" width="w-9" height="h-4" className="absolute -top-2.5 right-6 transition-transform duration-300 group-hover:rotate-3" />
+              <WashiTape color="sun" angle="tilt-right" width="w-9" height="h-4" className="absolute -top-2.5 right-6 transition-transform duration-300 group-hover:rotate-3 group-focus-visible:rotate-3" />
 
               {/* Top Header */}
               <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-soft-pink/35 text-[10px] font-mono tracking-wider select-none text-ink/75">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-signature-pink transition-transform duration-200 group-hover:scale-125" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-signature-pink transition-transform duration-200 group-hover:scale-125 group-focus-visible:scale-125" />
                   <span className="font-semibold text-deep-pink">MOMENT 03</span>
                   <span className="text-soft-pink select-none" aria-hidden="true">/</span>
                   <span className="font-medium text-ink/80 font-body uppercase text-[9px]">{theme || 'MOMENTS'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-mono text-[9px] text-deep-pink font-semibold hidden sm:inline">
+                  <span className="opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 font-mono text-[9px] text-deep-pink font-semibold hidden sm:inline">
                     [ ○ QUIET WATER ]
                   </span>
                   <span className="text-[9px] text-ink/65 uppercase tracking-wide">
@@ -240,7 +255,7 @@ export const LiveMoment: React.FC<LiveMomentProps> = ({
 
               {/* Bottom Caption */}
               <div className="mt-2.5 pt-2 border-t border-soft-pink/35 flex items-center justify-between text-xs text-ink/75">
-                <span className="type-handwriting-note italic text-ink/85 text-xs sm:text-sm group-hover:text-deep-pink transition-colors">
+                <span className="type-handwriting-note italic text-ink/85 text-xs sm:text-sm group-hover:text-deep-pink group-focus-visible:text-deep-pink transition-colors">
                   {caption || 'quiet by the water'}
                 </span>
                 <span className="text-[10px] font-mono uppercase tracking-wider text-deep-pink font-semibold">
@@ -256,20 +271,25 @@ export const LiveMoment: React.FC<LiveMomentProps> = ({
       case 'fragment': {
         // Intimate Snapshot: Curls Detail / Personal Moment
         return (
-          <div className={`relative group ${className}`}>
-            <div className="relative rounded-2xl overflow-hidden bg-[#FFFDF9] border border-soft-pink/55 shadow-[0_4px_16px_rgba(36,33,42,0.04)] p-3 sm:p-3.5 flex flex-col justify-between transform -rotate-[1.5deg] transition-all duration-300 group-hover:rotate-0 group-hover:-translate-y-1 group-hover:shadow-[0_10px_28px_rgba(36,33,42,0.07)]">
+          <div
+            tabIndex={0}
+            role="region"
+            aria-label="Moment 04: Close-up detail of dark curls"
+            className={`relative group rounded-2xl focus-visible:outline-2 focus-visible:outline-sea/70 ${className}`}
+          >
+            <div className="relative rounded-2xl overflow-hidden bg-[#FFFDF9] border border-soft-pink/55 shadow-[0_4px_16px_rgba(36,33,42,0.04)] p-3 sm:p-3.5 flex flex-col justify-between transform -rotate-[1.5deg] transition-all duration-300 group-hover:rotate-0 group-hover:-translate-y-1 group-focus-visible:rotate-0 group-focus-visible:-translate-y-1 group-hover:shadow-[0_10px_28px_rgba(36,33,42,0.07)]">
               
               {/* Sea-tinted tape tab */}
-              <WashiTape color="sea" angle="tilt-left" width="w-9" height="h-4" className="absolute -top-2.5 left-4 transition-transform duration-300 group-hover:-rotate-3" />
+              <WashiTape color="sea" angle="tilt-left" width="w-9" height="h-4" className="absolute -top-2.5 left-4 transition-transform duration-300 group-hover:-rotate-3 group-focus-visible:-rotate-3" />
 
               {/* Top Header */}
               <div className="flex items-center justify-between pb-1.5 mb-2 border-b border-soft-pink/30 text-[9px] font-mono tracking-wider select-none text-ink/75">
                 <div className="flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-warm-sun transition-transform duration-200 group-hover:scale-125" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-warm-sun transition-transform duration-200 group-hover:scale-125 group-focus-visible:scale-125" />
                   <span className="font-semibold text-deep-pink">MOMENT 04</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-mono text-[8px] text-deep-pink font-semibold hidden sm:inline">
+                  <span className="opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 font-mono text-[8px] text-deep-pink font-semibold hidden sm:inline">
                     [ ✦ SPONTANEOUS ]
                   </span>
                   <span className="text-[9px] text-ink/60 uppercase">
@@ -291,7 +311,7 @@ export const LiveMoment: React.FC<LiveMomentProps> = ({
 
               {/* Bottom Caption */}
               <div className="mt-2 pt-1.5 border-t border-soft-pink/30 flex items-center justify-between text-xs text-ink/75">
-                <span className="type-handwriting-note italic text-ink/80 text-[11px] sm:text-xs group-hover:text-deep-pink transition-colors">
+                <span className="type-handwriting-note italic text-ink/80 text-[11px] sm:text-xs group-hover:text-deep-pink group-focus-visible:text-deep-pink transition-colors">
                   {caption || 'one of those moments'}
                 </span>
                 <span className="text-[9px] font-mono uppercase text-deep-pink font-semibold">

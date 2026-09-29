@@ -1,6 +1,7 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ContinuousLine } from '../visual/ContinuousLine';
+import { ObservationCircleMark, PencilRulerTicks, RegistrationCrossMark } from '../visual/EditorialMarks';
 
 export interface CuriosityToCreationProps {
   className?: string;
@@ -22,9 +23,19 @@ export interface CuriosityToCreationProps {
  */
 export const CuriosityToCreation: React.FC<CuriosityToCreationProps> = ({ className = '' }) => {
   const shouldReduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const loopProgress = useTransform(scrollYProgress, [0.15, 0.5], [0, 1]);
+  const brushProgress = useTransform(scrollYProgress, [0.45, 0.85], [0, 1]);
 
   return (
     <section
+      ref={sectionRef}
       aria-label="Transition — Curiosity to Creation"
       className={`relative py-14 sm:py-18 lg:py-24 overflow-hidden editorial-container ${className}`}
     >
@@ -59,19 +70,23 @@ export const CuriosityToCreation: React.FC<CuriosityToCreationProps> = ({ classN
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
         >
-          {/* Subtle observation node mark echoing SEE */}
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <span className="w-2 h-2 rounded-full border border-signature-pink bg-warm-ivory shadow-xs" />
-            <span className="text-[10px] sm:text-[11px] font-body font-medium tracking-[0.2em] uppercase text-ink/75">
-              the idea turns
-            </span>
-            <span className="text-[9px] font-mono text-deep-pink/70">[ 3.2px ]</span>
+          {/* Subtle observation node mark echoing SEE with measurement scale */}
+          <div className="flex flex-col items-center gap-1 mb-3">
+            <div className="flex items-center justify-center gap-2">
+              <ObservationCircleMark size={14} color="#E85D8E" />
+              <span className="text-[10px] sm:text-[11px] font-body font-medium tracking-[0.2em] uppercase text-ink/75">
+                the idea turns
+              </span>
+              <span className="text-[9px] font-mono text-deep-pink/70">[ 3.2px ]</span>
+            </div>
+            <PencilRulerTicks length="sm" color="#E85D8E" className="opacity-30" />
           </div>
 
           <ContinuousLine
             state="loop"
             color="#E85D8E"
             strokeWidth={3.2}
+            progress={shouldReduceMotion ? undefined : loopProgress}
             animated={!shouldReduceMotion}
             className="w-full max-h-[160px] sm:max-h-[190px]"
           />
@@ -83,10 +98,10 @@ export const CuriosityToCreation: React.FC<CuriosityToCreationProps> = ({ classN
           initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
           {/* Tactile paper card tab */}
-          <div className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-[#FFFDF9] border border-soft-pink/60 shadow-xs flex items-center gap-2.5 transform -rotate-[0.8deg]">
+          <div className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-[#FFFDF9] border border-soft-pink/60 shadow-xs flex items-center gap-2.5 transform -rotate-[0.8deg] transition-transform duration-300 hover:rotate-0 hover:shadow-md">
             <span className="text-signature-pink text-xs select-none" aria-hidden="true">✦</span>
             <span className="type-handwriting-note text-base sm:text-lg lg:text-xl text-ink/90 italic">
               curiosity becomes creation
@@ -108,12 +123,13 @@ export const CuriosityToCreation: React.FC<CuriosityToCreationProps> = ({ classN
           initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.9, ease: 'easeOut', delay: 0.45 }}
+          transition={{ duration: 0.9, ease: 'easeOut', delay: 0.35 }}
         >
           <ContinuousLine
             state="brush"
             color="#E85D8E"
             strokeWidth={5.5}
+            progress={shouldReduceMotion ? undefined : brushProgress}
             animated={!shouldReduceMotion}
             className="w-full max-h-[140px] sm:max-h-[170px]"
           />

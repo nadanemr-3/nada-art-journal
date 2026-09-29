@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion, useReducedMotion, MotionValue } from 'motion/react';
 
 export type ContinuousLineState = 'hero' | 'route' | 'brush' | 'wave' | 'loop';
 
@@ -14,8 +14,8 @@ export interface ContinuousLineProps {
   strokeWidth?: number;
   /** When true and reduced motion is false, prepares for animation */
   animated?: boolean;
-  /** Progress from 0 to 1 for scroll-linked path reveal */
-  progress?: number;
+  /** Progress from 0 to 1 for scroll-linked path reveal (number or MotionValue) */
+  progress?: number | MotionValue<number>;
 }
 
 /**
@@ -64,16 +64,11 @@ export const ContinuousLine: React.FC<ContinuousLineProps> = ({
             strokeWidth={defaultWidth}
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={isAnimated ? { pathLength: 0, opacity: 0.8 } : undefined}
-            animate={
-              isAnimated
-                ? progress !== undefined
-                  ? { pathLength: progress, opacity: 1 }
-                  : { pathLength: 1, opacity: 1 }
-                : undefined
-            }
-            transition={isAnimated ? { duration: 1.2, ease: [0.25, 0.1, 0.25, 1] } : undefined}
-            style={!isAnimated && progress !== undefined ? { pathLength: progress } : undefined}
+            initial={isAnimated && progress === undefined ? { pathLength: 0, opacity: 0.8 } : undefined}
+            whileInView={isAnimated && progress === undefined ? { pathLength: 1, opacity: 1 } : undefined}
+            viewport={{ once: true, margin: '-30px' }}
+            transition={isAnimated && progress === undefined ? { duration: 1.2, ease: [0.25, 0.1, 0.25, 1] } : undefined}
+            style={!shouldReduceMotion && progress !== undefined ? { pathLength: progress } : undefined}
           />
         </svg>
       );
@@ -111,16 +106,11 @@ export const ContinuousLine: React.FC<ContinuousLineProps> = ({
             strokeWidth={defaultWidth}
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={isAnimated ? { pathLength: 0, opacity: 0.9 } : undefined}
-            animate={
-              isAnimated
-                ? progress !== undefined
-                  ? { pathLength: progress, opacity: 1 }
-                  : { pathLength: 1, opacity: 1 }
-                : undefined
-            }
-            transition={isAnimated ? { duration: 1.4, ease: [0.22, 1, 0.36, 1] } : undefined}
-            style={!isAnimated && progress !== undefined ? { pathLength: progress } : undefined}
+            initial={isAnimated && progress === undefined ? { pathLength: 0, opacity: 0.9 } : undefined}
+            whileInView={isAnimated && progress === undefined ? { pathLength: 1, opacity: 1 } : undefined}
+            viewport={{ once: true, margin: '-30px' }}
+            transition={isAnimated && progress === undefined ? { duration: 1.4, ease: [0.22, 1, 0.36, 1] } : undefined}
+            style={!shouldReduceMotion && progress !== undefined ? { pathLength: progress } : undefined}
           />
 
           {/* Map waypoints / observation nodes */}
@@ -166,16 +156,11 @@ export const ContinuousLine: React.FC<ContinuousLineProps> = ({
             strokeWidth={defaultWidth}
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={isAnimated ? { pathLength: 0, opacity: 0.95 } : undefined}
-            animate={
-              isAnimated
-                ? progress !== undefined
-                  ? { pathLength: progress, opacity: 1 }
-                  : { pathLength: 1, opacity: 1 }
-                : undefined
-            }
-            transition={isAnimated ? { duration: 1.1, ease: [0.16, 1, 0.3, 1] } : undefined}
-            style={!isAnimated && progress !== undefined ? { pathLength: progress } : undefined}
+            initial={isAnimated && progress === undefined ? { pathLength: 0, opacity: 0.95 } : undefined}
+            whileInView={isAnimated && progress === undefined ? { pathLength: 1, opacity: 1 } : undefined}
+            viewport={{ once: true, margin: '-30px' }}
+            transition={isAnimated && progress === undefined ? { duration: 1.1, ease: [0.16, 1, 0.3, 1] } : undefined}
+            style={!shouldReduceMotion && progress !== undefined ? { pathLength: progress } : undefined}
           />
 
           {/* Hand-drawn texture accent line */}
@@ -215,16 +200,11 @@ export const ContinuousLine: React.FC<ContinuousLineProps> = ({
             strokeLinecap="round"
             strokeLinejoin="round"
             opacity="0.7"
-            initial={isAnimated ? { pathLength: 0 } : undefined}
-            animate={
-              isAnimated
-                ? progress !== undefined
-                  ? { pathLength: progress }
-                  : { pathLength: 1 }
-                : undefined
-            }
-            transition={isAnimated ? { duration: 1.4, ease: 'easeOut', delay: 0.15 } : undefined}
-            style={!isAnimated && progress !== undefined ? { pathLength: progress } : undefined}
+            initial={isAnimated && progress === undefined ? { pathLength: 0 } : undefined}
+            whileInView={isAnimated && progress === undefined ? { pathLength: 1 } : undefined}
+            viewport={{ once: true, margin: '-30px' }}
+            transition={isAnimated && progress === undefined ? { duration: 1.4, ease: 'easeOut', delay: 0.15 } : undefined}
+            style={!shouldReduceMotion && progress !== undefined ? { pathLength: progress } : undefined}
           />
 
           {/* Primary dominant Pink wave */}
@@ -234,16 +214,11 @@ export const ContinuousLine: React.FC<ContinuousLineProps> = ({
             strokeWidth={defaultWidth}
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={isAnimated ? { pathLength: 0 } : undefined}
-            animate={
-              isAnimated
-                ? progress !== undefined
-                  ? { pathLength: progress }
-                  : { pathLength: 1 }
-                : undefined
-            }
-            transition={isAnimated ? { duration: 1.3, ease: 'easeOut' } : undefined}
-            style={!isAnimated && progress !== undefined ? { pathLength: progress } : undefined}
+            initial={isAnimated && progress === undefined ? { pathLength: 0 } : undefined}
+            whileInView={isAnimated && progress === undefined ? { pathLength: 1 } : undefined}
+            viewport={{ once: true, margin: '-30px' }}
+            transition={isAnimated && progress === undefined ? { duration: 1.3, ease: 'easeOut' } : undefined}
+            style={!shouldReduceMotion && progress !== undefined ? { pathLength: progress } : undefined}
           />
         </svg>
       );
@@ -280,16 +255,11 @@ export const ContinuousLine: React.FC<ContinuousLineProps> = ({
             strokeWidth={defaultWidth}
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={isAnimated ? { pathLength: 0 } : undefined}
-            animate={
-              isAnimated
-                ? progress !== undefined
-                  ? { pathLength: progress }
-                  : { pathLength: 1 }
-                : undefined
-            }
-            transition={isAnimated ? { duration: 1.6, ease: [0.25, 0.1, 0.25, 1] } : undefined}
-            style={!isAnimated && progress !== undefined ? { pathLength: progress } : undefined}
+            initial={isAnimated && progress === undefined ? { pathLength: 0 } : undefined}
+            whileInView={isAnimated && progress === undefined ? { pathLength: 1 } : undefined}
+            viewport={{ once: true, margin: '-30px' }}
+            transition={isAnimated && progress === undefined ? { duration: 1.6, ease: [0.25, 0.1, 0.25, 1] } : undefined}
+            style={!shouldReduceMotion && progress !== undefined ? { pathLength: progress } : undefined}
           />
         </svg>
       );

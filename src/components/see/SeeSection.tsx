@@ -1,7 +1,8 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ContinuousLine } from '../visual/ContinuousLine';
 import { HandDrawnStroke } from '../visual/HandDrawnStroke';
+import { CompassMark, ObservationCircleMark, RegistrationCrossMark, HandDrawnArrow, PencilRulerTicks } from '../visual/EditorialMarks';
 import { CuriosityPoint, CuriosityPointKey } from './CuriosityPoint';
 
 export interface SeeSectionProps {
@@ -66,6 +67,14 @@ const CURIOSITY_ITEMS: CuriosityData[] = [
  */
 export const SeeSection: React.FC<SeeSectionProps> = ({ className = '' }) => {
   const shouldReduceMotion = useReducedMotion();
+  const routeRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: routeRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const routeProgress = useTransform(scrollYProgress, [0.1, 0.55], [0, 1]);
 
   return (
     <section
@@ -150,21 +159,45 @@ export const SeeSection: React.FC<SeeSectionProps> = ({ className = '' }) => {
         </motion.div>
       </div>
 
-      {/* Continuous Route Spine (Desktop / Tablet view) */}
-      <div className="relative my-6 sm:my-8 hidden lg:block">
-        <ContinuousLine
-          state="route"
-          color="#E85D8E"
-          strokeWidth={2.75}
-          animated={!shouldReduceMotion}
-          className="w-full max-w-5xl mx-auto"
-        />
-      </div>
+      {/* Illustrated Observation Field Backdrop (Desktop Map Layer) */}
+      <div className="relative">
+        {/* Subtle Topographic and Survey Field Marks behind the route & cards */}
+        <div className="absolute inset-0 -z-10 pointer-events-none select-none opacity-35 overflow-hidden" aria-hidden="true">
+          <svg viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            {/* Soft topographic survey contours */}
+            <path d="M 50 180 C 200 120, 350 240, 500 160 C 650 80, 850 200, 1150 140" stroke="#F6C4D3" strokeWidth="1" strokeDasharray="6 6" />
+            <path d="M 80 240 C 250 190, 420 290, 600 220 C 780 150, 950 260, 1120 200" stroke="#F6C4D3" strokeWidth="0.8" strokeDasharray="4 4" />
+            
+            {/* Survey Grid Crosshairs */}
+            <path d="M 200 60 L 200 75 M 192 68 L 208 68" stroke="#E85D8E" strokeWidth="1" opacity="0.6" />
+            <path d="M 600 50 L 600 65 M 592 58 L 608 58" stroke="#E85D8E" strokeWidth="1" opacity="0.6" />
+            <path d="M 1000 70 L 1000 85 M 992 78 L 1008 78" stroke="#E85D8E" strokeWidth="1" opacity="0.6" />
+            <path d="M 400 320 L 400 335 M 392 328 L 408 328" stroke="#E85D8E" strokeWidth="1" opacity="0.6" />
+            <path d="M 800 310 L 800 325 M 792 318 L 808 318" stroke="#E85D8E" strokeWidth="1" opacity="0.6" />
+            
+            {/* Coordinate annotations */}
+            <text x="185" y="55" fill="#E85D8E" fontSize="9" fontFamily="monospace" opacity="0.5">[ 29°58'N ]</text>
+            <text x="585" y="45" fill="#E85D8E" fontSize="9" fontFamily="monospace" opacity="0.5">[ 31°15'E ]</text>
+            <text x="985" y="65" fill="#E85D8E" fontSize="9" fontFamily="monospace" opacity="0.5">[ ELEV +12M ]</text>
+          </svg>
+        </div>
 
-      {/* Desktop Editorial Waypoints (Asymmetric placement along the route) */}
-      <div className="hidden lg:grid grid-cols-6 gap-3.5 xl:gap-5 pt-4 pb-8 relative z-10">
+        {/* Continuous Route Spine (Desktop / Tablet view) */}
+        <div ref={routeRef} className="relative my-6 sm:my-8 hidden lg:block">
+          <ContinuousLine
+            state="route"
+            color="#E85D8E"
+            strokeWidth={2.75}
+            progress={shouldReduceMotion ? undefined : routeProgress}
+            animated={!shouldReduceMotion}
+            className="w-full max-w-5xl mx-auto"
+          />
+        </div>
+
+        {/* Desktop Editorial Waypoints (Asymmetric placement along the route) */}
+        <div className="hidden lg:grid grid-cols-6 gap-3.5 xl:gap-5 pt-4 pb-8 relative z-10">
         {CURIOSITY_ITEMS.map((item, idx) => (
-          <div
+          <motion.div
             key={item.id}
             className={`flex flex-col ${
               idx === 0
@@ -179,6 +212,10 @@ export const SeeSection: React.FC<SeeSectionProps> = ({ className = '' }) => {
                 ? 'translate-y-5'
                 : '-translate-y-1'
             }`}
+            initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5, ease: 'easeOut', delay: idx * 0.1 }}
           >
             <CuriosityPoint
               id={item.id}
@@ -187,9 +224,10 @@ export const SeeSection: React.FC<SeeSectionProps> = ({ className = '' }) => {
               note={item.note}
               index={idx}
             />
-          </div>
+          </motion.div>
         ))}
       </div>
+    </div>
 
       {/* Tactile Observation Summary Strip (Archival field ribbon) */}
       <motion.div
@@ -227,9 +265,13 @@ export const SeeSection: React.FC<SeeSectionProps> = ({ className = '' }) => {
       {/* Mobile / Tablet Vertical Path Flow (< 1024px) */}
       <div className="lg:hidden relative pl-6 sm:pl-10 space-y-10 my-8">
         {/* Vertical organic route guideline */}
-        <div
-          className="absolute left-2 sm:left-4 top-2 bottom-6 w-[2px] bg-soft-pink"
+        <motion.div
+          className="absolute left-2 sm:left-4 top-2 bottom-6 w-[2px] bg-soft-pink origin-top"
           aria-hidden="true"
+          initial={shouldReduceMotion ? { scaleY: 1 } : { scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true, margin: '-30px' }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         />
 
         {CURIOSITY_ITEMS.map((item, idx) => (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { OrganicShape } from '../visual/OrganicShape';
+import { ObservationCircleMark, RegistrationCrossMark } from '../visual/EditorialMarks';
 
 export interface HeroArtworkProps {
   /** Optional custom image or SVG source for the portrait */
@@ -31,10 +32,10 @@ export const HeroArtwork: React.FC<HeroArtworkProps> = ({
 
   return (
     <motion.div
-      className={`relative w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[440px] mx-auto lg:mx-0 select-none ${className}`}
-      initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: 'easeOut' as const, delay: 0.35 }}
+      className={`relative w-full max-w-[370px] sm:max-w-[440px] lg:max-w-[490px] xl:max-w-[510px] -mt-3 sm:-mt-6 lg:-mt-10 mx-auto lg:mx-0 select-none ${className}`}
+      initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 22, rotate: 1.5, scale: 0.97 }}
+      animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+      transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
     >
       {/* Layer 1: Background Organic Color Field (Soft Pink Pebble) */}
       <div className="absolute inset-0 -z-20 flex items-center justify-center pointer-events-none transform -rotate-3 scale-105">
@@ -58,7 +59,15 @@ export const HeroArtwork: React.FC<HeroArtworkProps> = ({
       <div
         className="absolute inset-1 sm:inset-2 -z-10 rounded-[28px] sm:rounded-[32px] bg-warm-ivory/90 border border-soft-pink/50 shadow-xs pointer-events-none transform rotate-[1.8deg]"
         aria-hidden="true"
-      />
+      >
+        {/* Subtle registration marks on underlying sheet */}
+        <div className="absolute top-3 left-3 opacity-40">
+          <RegistrationCrossMark size={14} color="#B93668" />
+        </div>
+        <div className="absolute bottom-3 right-3 opacity-40">
+          <RegistrationCrossMark size={14} color="#B93668" />
+        </div>
+      </div>
 
       {/* Layer 4: Primary Tipped-in Art Journal Mount Plate */}
       <div className="group relative w-full rounded-[26px] sm:rounded-[30px] overflow-hidden border border-soft-pink/60 bg-[#FFFDF9] shadow-[0_8px_30px_rgba(36,33,42,0.06)] p-4 sm:p-5 flex flex-col justify-between transform -rotate-[1deg] transition-all duration-300 hover:rotate-0 hover:-translate-y-0.5 hover:shadow-[0_14px_40px_rgba(36,33,42,0.08)]">

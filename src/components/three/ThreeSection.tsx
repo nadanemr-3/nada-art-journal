@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { HandDrawnStroke } from '../visual/HandDrawnStroke';
 import { WashiTape } from '../visual/WashiTape';
 import { NadaSymbol } from '../visual/NadaSymbol';
+import { ObservationCircleMark, PencilRulerTicks, SunBurstMark, WaveletMark, HandDrawnArrow, RegistrationCrossMark } from '../visual/EditorialMarks';
 
 export interface ThreeSectionProps {
   className?: string;
@@ -75,7 +76,7 @@ export const ThreeSection: React.FC<ThreeSectionProps> = ({ className = '' }) =>
     <section
       id="three"
       aria-label="Three Things I Keep Noticing"
-      className={`relative py-16 sm:py-22 lg:py-28 overflow-hidden editorial-container ${className}`}
+      className={`relative py-20 sm:py-28 lg:py-36 overflow-hidden editorial-container ${className}`}
     >
       {/* Editorial Journal Folio Header Spread */}
       <motion.div
@@ -158,15 +159,31 @@ export const ThreeSection: React.FC<ThreeSectionProps> = ({ className = '' }) =>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 items-stretch relative">
         
         {/* WORLD 01: CURIOUS ABOUT (The Observation Field — Dominant Anchor, Cols 1-6) */}
-        <motion.div
-          className="lg:col-span-6 flex flex-col justify-between p-6 sm:p-8 rounded-3xl bg-[#FFFDF9] border border-soft-pink/55 shadow-[0_6px_24px_rgba(36,33,42,0.04)] relative group transition-all duration-300 hover:shadow-[0_12px_36px_rgba(36,33,42,0.07)] hover:-translate-y-1"
-          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
-        >
-          {/* Subtle Sun-gold washi tape tab on top corner */}
-          <WashiTape color="sun" angle="tilt-left" className="absolute -top-3 left-10 transition-transform duration-300 group-hover:-rotate-3" />
+        <div className="lg:col-span-6 relative">
+          {/* Underlying sketchbook paper sheet peeking out for physical depth */}
+          <div
+            className="absolute inset-1 sm:inset-1.5 -z-10 rounded-3xl bg-warm-ivory border border-soft-pink/40 shadow-xs pointer-events-none transform -rotate-[0.6deg]"
+            aria-hidden="true"
+          />
+
+          <motion.div
+            tabIndex={0}
+            role="region"
+            aria-label={`${TERRITORIES[0].title}: ${TERRITORIES[0].subtitle}`}
+            className="h-full flex flex-col justify-between p-6 sm:p-8 rounded-3xl bg-[#FFFDF9] border border-soft-pink/55 shadow-[0_6px_24px_rgba(36,33,42,0.04)] relative group transition-all duration-300 hover:shadow-[0_12px_36px_rgba(36,33,42,0.07)] hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:outline-2 focus-visible:outline-signature-pink/60 cursor-default"
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
+          >
+            {/* Corner registration crosshairs */}
+            <div className="absolute top-2.5 left-2.5 text-ink/20 text-[9px] font-mono pointer-events-none select-none" aria-hidden="true">⌜</div>
+            <div className="absolute top-2.5 right-2.5 text-ink/20 text-[9px] font-mono pointer-events-none select-none" aria-hidden="true">⌝</div>
+            <div className="absolute bottom-2.5 left-2.5 text-ink/20 text-[9px] font-mono pointer-events-none select-none" aria-hidden="true">⌞</div>
+            <div className="absolute bottom-2.5 right-2.5 text-ink/20 text-[9px] font-mono pointer-events-none select-none" aria-hidden="true">⌟</div>
+
+            {/* Subtle Sun-gold washi tape tab on top corner */}
+            <WashiTape color="sun" angle="tilt-left" className="absolute -top-3 left-10 transition-transform duration-300 group-hover:-rotate-3 group-focus-visible:-rotate-3" />
 
           <div>
             {/* World 01 Header & Identification */}
@@ -245,6 +262,7 @@ export const ThreeSection: React.FC<ThreeSectionProps> = ({ className = '' }) =>
             </span>
           </div>
         </motion.div>
+      </div>
 
         {/* RIGHT COLUMN: WORLDS 02 & 03 (Cols 7-12) */}
         <div className="lg:col-span-6 flex flex-col gap-8 justify-between">
@@ -296,7 +314,7 @@ export const ThreeSection: React.FC<ThreeSectionProps> = ({ className = '' }) =>
               </div>
             </div>
 
-            {/* Items Grid */}
+            {/* Items Grid with studio measurement scale */}
             <div className="grid grid-cols-2 gap-2.5 my-4">
               {TERRITORIES[1].items.map((item) => (
                 <div
@@ -307,6 +325,12 @@ export const ThreeSection: React.FC<ThreeSectionProps> = ({ className = '' }) =>
                   <span className="group-hover/item:text-deep-pink transition-colors">{item}</span>
                 </div>
               ))}
+            </div>
+
+            {/* Studio pencil ruler marks */}
+            <div className="flex items-center gap-2 mb-2 opacity-50">
+              <PencilRulerTicks length="sm" color="#B93668" />
+              <span className="text-[8px] font-mono text-ink/60 uppercase">[ STUDIO BENCH ]</span>
             </div>
 
             {/* Footnote */}

@@ -1,6 +1,7 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ContinuousLine } from '../visual/ContinuousLine';
+import { SunBurstMark, WaveletMark } from '../visual/EditorialMarks';
 
 export interface MakeToLiveProps {
   className?: string;
@@ -23,9 +24,19 @@ export interface MakeToLiveProps {
  */
 export const MakeToLive: React.FC<MakeToLiveProps> = ({ className = '' }) => {
   const shouldReduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const brushProgress = useTransform(scrollYProgress, [0.15, 0.48], [0, 1]);
+  const waveProgress = useTransform(scrollYProgress, [0.45, 0.85], [0, 1]);
 
   return (
     <section
+      ref={sectionRef}
       aria-label="Transition — Making to Living"
       className={`relative py-14 sm:py-18 lg:py-24 overflow-hidden editorial-container ${className}`}
     >
@@ -68,7 +79,7 @@ export const MakeToLive: React.FC<MakeToLiveProps> = ({ className = '' }) => {
             </div>
 
             {/* Drifting paper scrap tag */}
-            <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded bg-warm-ivory border border-soft-pink/40 text-[9px] font-mono text-ink/60 shadow-2xs transform -rotate-2">
+            <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded bg-warm-ivory border border-soft-pink/40 text-[9px] font-mono text-ink/60 shadow-2xs transform -rotate-2 hover:rotate-0 transition-transform">
               <span>REF: STUDIO EXIT</span>
               <span className="text-signature-pink font-display">↗</span>
             </div>
@@ -79,6 +90,7 @@ export const MakeToLive: React.FC<MakeToLiveProps> = ({ className = '' }) => {
             state="brush"
             color="#E85D8E"
             strokeWidth={4.5}
+            progress={shouldReduceMotion ? undefined : brushProgress}
             animated={!shouldReduceMotion}
             className="w-full max-h-[130px] sm:max-h-[160px] opacity-90"
           />
@@ -90,10 +102,10 @@ export const MakeToLive: React.FC<MakeToLiveProps> = ({ className = '' }) => {
           initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.6, delay: 0.35 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
           {/* Tactile paper card tab */}
-          <div className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-[#FFFDF9] border border-soft-pink/55 shadow-xs flex items-center gap-2.5 transform rotate-[0.6deg]">
+          <div className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-[#FFFDF9] border border-soft-pink/55 shadow-xs flex items-center gap-2.5 transform rotate-[0.6deg] transition-transform duration-300 hover:rotate-0 hover:shadow-md">
             <span className="text-sea text-xs select-none" aria-hidden="true">✦</span>
             <span className="type-handwriting-note text-base sm:text-lg lg:text-xl text-ink/90 italic">
               making becomes living
@@ -115,16 +127,26 @@ export const MakeToLive: React.FC<MakeToLiveProps> = ({ className = '' }) => {
           initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.85, ease: 'easeOut', delay: 0.45 }}
+          transition={{ duration: 0.85, ease: 'easeOut', delay: 0.35 }}
         >
-          {/* Wave line: renders Sea blue (#55B9C6) alongside Signature Pink */}
-          <ContinuousLine
-            state="wave"
-            color="#E85D8E"
-            strokeWidth={3.5}
-            animated={!shouldReduceMotion}
-            className="w-full max-h-[150px] sm:max-h-[180px]"
-          />
+          {/* Wave line: renders Sea blue (#55B9C6) alongside Signature Pink with subtle sun & wavelet marks */}
+          <div className="relative">
+            <ContinuousLine
+              state="wave"
+              color="#E85D8E"
+              strokeWidth={3.5}
+              progress={shouldReduceMotion ? undefined : waveProgress}
+              animated={!shouldReduceMotion}
+              className="w-full max-h-[150px] sm:max-h-[180px]"
+            />
+            {/* Subtle floating sun burst and sea wavelet marks */}
+            <div className="absolute top-2 right-12 sm:right-24 opacity-75 pointer-events-none select-none">
+              <SunBurstMark size={24} color="#F4C95D" />
+            </div>
+            <div className="absolute bottom-4 left-8 sm:left-16 opacity-60 pointer-events-none select-none">
+              <WaveletMark size={32} color="#55B9C6" />
+            </div>
+          </div>
 
           {/* Quiet narrative threshold marker leading into LIVE */}
           <div className="flex items-center justify-between px-3 sm:px-8 -mt-2 text-[10px] sm:text-[11px] font-body tracking-[0.18em] uppercase text-ink/75">
