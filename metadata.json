@@ -1,0 +1,8 @@
+{
+  "name": " NADA — Personal Space",
+  "description": "A personal digital space exploring curiosity, creativity, design, technology, art, places, people, and the little things that make life interesting.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

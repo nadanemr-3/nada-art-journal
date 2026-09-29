@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme {
+  /* NADA Core Color Palette */
+  --color-signature-pink: #E85D8E;
+  --color-soft-pink: #F6C4D3;
+  --color-deep-pink: #B93668;
+  --color-warm-ivory: #FFF9F2;
+  --color-ink: #24212A;
+  --color-warm-sun: #F4C95D;
+  --color-sea: #55B9C6;
+
+  /* Typography Font Families */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-handwriting: "Caveat", "Patrick Hand", cursive;
+
+  /* Radius Tokens */
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --radius-xl: 48px;
+  --radius-pill: 999px;
+}
+
+/* Base Page Foundation */
+:root {
+  color-scheme: light;
+  --bg-primary: #FFF9F2;
+  --text-primary: #24212A;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #FFF9F2;
+  color: #24212A;
+  font-family: var(--font-body);
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #FFF9F2;
+  color: #24212A;
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Media Defaults */
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Interactive & Link Defaults */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Selection Styling */
+::selection {
+  background-color: #F6C4D3;
+  color: #24212A;
+}
+
+/* Accessibility Focus States */
+:focus-visible {
+  outline: 2px solid #E85D8E;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Editorial Typography Primitives */
+.type-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.type-section-heading {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.type-subheading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.type-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.65;
+}
+
+.type-label {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.type-handwriting-note {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+/* Tactile Art Journal & Visual Diary Primitives */
+.washi-tape {
+  background: rgba(246, 196, 211, 0.5);
+  border-top: 1px dashed rgba(232, 93, 142, 0.35);
+  border-bottom: 1px dashed rgba(232, 93, 142, 0.35);
+  backdrop-filter: blur(1px);
+}
+
+.washi-tape-sun {
+  background: rgba(244, 201, 93, 0.45);
+  border-top: 1px dashed rgba(244, 201, 93, 0.6);
+  border-bottom: 1px dashed rgba(244, 201, 93, 0.6);
+}
+
+.washi-tape-sea {
+  background: rgba(85, 185, 198, 0.4);
+  border-top: 1px dashed rgba(85, 185, 198, 0.55);
+  border-bottom: 1px dashed rgba(85, 185, 198, 0.55);
+}
+
+.editorial-badge {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(246, 196, 211, 0.7);
+  background: rgba(255, 249, 242, 0.92);
+  color: #24212A;
+}
+
+.sketchbook-paper {
+  background: #FFFDF9;
+  border: 1px solid rgba(246, 196, 211, 0.55);
+  box-shadow: 0 4px 20px -2px rgba(36, 33, 42, 0.04), 0 1px 3px 0 rgba(36, 33, 42, 0.02);
+}
+
+/* Responsive Editorial Container */
+.editorial-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.25rem, 4vw, 3.5rem);
+  padding-right: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+/* Accessibility: Reduced Motion Foundation */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
